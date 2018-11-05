@@ -1,12 +1,15 @@
 [tool.poetry]
 name = "zhlevel"
 version = "0.1.0"
-description = ""
-authors = ["patarapolw <patarapolw@gmail.com>"]
+description = '''Trying to figure out, if I had to separate Chinese into 6x10 = 60 levels,
+just like https://www.wanikani.com, how would I do it?'''
+authors = ["Pacharapol Withayasakpunt <patarapolw@gmail.com>"]
 
 [tool.poetry.dependencies]
 python = "*"
 "ruamel.yaml" = "^0.15.76"
 zhlib = {path = "../zhlib"}
+ankisync = {path = "../ankisync"}
+regex = "=2018.02.21"
 
 [tool.poetry.dev-dependencies]
