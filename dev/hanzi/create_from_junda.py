@@ -13,7 +13,7 @@ def purge_junda(d_out, current_level, current, last_i, i):
     })
 
 
-def read_junda(current_level=55):
+def read_junda(current_level=51):
     with open('spoonfed.txt') as f_in, open('generated.yaml', 'r+') as f_out, open('junda.txt') as junda:
         previous = list(set(regex.findall(r'\p{IsHan}', f_out.read())))
         f_out.seek(0)
@@ -39,7 +39,7 @@ def read_junda(current_level=55):
 
             current.append(hanzi)
 
-            if len(current) > (483 / 6):
+            if len(current) > (483 / 10):
                 purge_junda(d_out, current_level, current, last_i, i)
 
                 current = list()
