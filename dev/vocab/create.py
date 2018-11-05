@@ -1,5 +1,6 @@
 from ruamel import yaml
 import regex
+from zhlib.util import sort_vocab
 
 
 with open('hsk.yaml') as f_in, open('generated.yaml', 'w') as f_out, open('../hanzi/generated.yaml') as h_rule:
@@ -10,10 +11,11 @@ with open('hsk.yaml') as f_in, open('generated.yaml', 'w') as f_out, open('../ha
 
     prev = None
     used = set()
+    allowed_hanzi = list()
 
     for i in range(60):
         level = '{:02d}'.format(i+1)
-        allowed_hanzi = rule[level][0]['hanzi']
+        allowed_hanzi += rule[level][0]['hanzi']
 
         if i < 5:
             hsk = 1
@@ -35,13 +37,13 @@ with open('hsk.yaml') as f_in, open('generated.yaml', 'w') as f_out, open('../ha
             no_vocab = 125
 
         source = f'HSK{hsk}'
-        v_list = d[source]
+        v_list = sort_vocab(d[source])
 
-        current_vocab = set()
+        current_vocab = list()
         for vocab in v_list:
             if vocab not in used:
                 if all(h in allowed_hanzi for h in regex.findall(r'\p{IsHan}', vocab)):
-                    current_vocab.add(vocab)
+                    current_vocab.append(vocab)
                     if len(current_vocab) >= no_vocab:
                         break
                 used.add(vocab)
@@ -52,7 +54,7 @@ with open('hsk.yaml') as f_in, open('generated.yaml', 'w') as f_out, open('../ha
             limit = no_vocab - len(current_vocab)
             for x, vocab in enumerate(v_list):
                 if x < limit:
-                    current_vocab.add(vocab)
+                    current_vocab.append(vocab)
                     used.add(vocab)
                 else:
                     break
