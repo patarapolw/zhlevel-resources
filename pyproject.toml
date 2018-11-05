@@ -1,0 +1,12 @@
+[tool.poetry]
+name = "zhlevel"
+version = "0.1.0"
+description = ""
+authors = ["patarapolw <patarapolw@gmail.com>"]
+
+[tool.poetry.dependencies]
+python = "*"
+"ruamel.yaml" = "^0.15.76"
+zhlib = {path = "../zhlib"}
+
+[tool.poetry.dev-dependencies]
