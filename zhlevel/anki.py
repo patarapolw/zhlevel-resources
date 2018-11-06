@@ -100,9 +100,9 @@ class ZhSync:
                     'note'
                 ],
                 templates={
-                    '中英': (markdown('# Vocab: {{hanzi}}'), self.VOCAB_A_FORMAT),
-                    '英中': (markdown('# Vocab meaning: {{meaning}}'), self.VOCAB_A_FORMAT),
-                    # '字迹': (markdown('# Vocab writing: {{meaning}}'), VOCAB_A_FORMAT)
+                    '中英': (markdown('# Vocab: {{simplified}}'), self.VOCAB_A_FORMAT),
+                    '英中': (markdown('# Vocab meaning: {{english}}'), self.VOCAB_A_FORMAT),
+                    # '字迹': (markdown('# Vocab writing: {{english}}'), VOCAB_A_FORMAT)
                 }
             )
 

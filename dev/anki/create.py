@@ -99,7 +99,7 @@ def create_apkg(filename='zhlevel.apkg'):
                 'note'
             ],
             templates={
-                '中英': (markdown('# Vocab: {{hanzi}}'), VOCAB_A_FORMAT),
+                '中英': (markdown('# Vocab: {{simplified}}'), VOCAB_A_FORMAT),
                 '英中': (markdown('# Vocab meaning: {{english}}'), VOCAB_A_FORMAT),
                 # '字迹': (markdown('# Vocab writing: {{english}}'), VOCAB_A_FORMAT)
             }
