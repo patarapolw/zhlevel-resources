@@ -110,45 +110,53 @@ class ZhSync:
             )
 
     def add_hanzi(self, hanzi):
-        db_h = zh.Hanzi.get_or_none(hanzi=hanzi)
-        if db_h:
-            h_dict = dict(db_h)
-            h_dict.update({
-                'vocabs': markdown('\n'.join(f'- {v}' for v in h_dict['vocabs'])),
-                'sentences': markdown('\n'.join(f'- {s}' for s in h_dict['sentences'])),
+        existing_ids = self.anki.search_notes({'hanzi': hanzi})
+
+        if not existing_ids:
+            db_h = zh.Hanzi.get_or_none(hanzi=hanzi)
+            if db_h:
+                h_dict = dict(db_h)
+                h_dict.update({
+                    'vocabs': markdown('\n'.join(f'- {v}' for v in h_dict['vocabs'])),
+                    'sentences': markdown('\n'.join(f'- {s}' for s in h_dict['sentences'])),
+                })
+            else:
+                h_dict = {
+                    'hanzi': hanzi
+                }
+
+            note_id = self.anki.add_note({
+                'modelName': 'zhlevel_hanzi',
+                'deckId': 1,
+                'fields': h_dict
             })
+
+            card_ids = self.anki.note_to_cards(note_id)
+
+            level = self.h_level[hanzi]
+            label = self.LABELS[(int(level)-1) // 10]
+
+            self.anki.change_deck(card_ids['中英'],
+                                  deck_name=f'ZhLevel::Hanzi::{label}::Level {level}::中英',
+                                  dconf=deck_conf['id'])
+            self.anki.change_deck(card_ids['英中'],
+                                  deck_name=f'ZhLevel::Hanzi::{label}::Level {level}::英中',
+                                  dconf=deck_conf['id'])
+            self.anki.change_deck(card_ids['字迹'],
+                                  deck_name=f'ZhLevel::Hanzi::{label}::Level {level}::字迹',
+                                  dconf=deck_conf['id'])
+            note_ids = [note_id]
         else:
-            h_dict = {
-                'hanzi': hanzi
-            }
+            note_ids = existing_ids
 
-        note_id = self.anki.add_note({
-            'modelName': 'zhlevel_hanzi',
-            'deckId': 1,
-            'fields': h_dict
-        })
+        self.anki.add_tags(note_ids=note_ids, tags=[datetime.now().strftime('%Y.%m.%d')])
 
-        card_ids = self.anki.note_to_cards(note_id)
-
-        level = self.h_level[hanzi]
-        label = self.LABELS[(int(level)-1) // 10]
-
-        self.anki.change_deck(card_ids['中英'],
-                              deck_name=f'ZhLevel::Hanzi::{label}::Level {level}::中英',
-                              dconf=deck_conf['id'])
-        self.anki.change_deck(card_ids['英中'],
-                              deck_name=f'ZhLevel::Hanzi::{label}::Level {level}::英中',
-                              dconf=deck_conf['id'])
-        self.anki.change_deck(card_ids['字迹'],
-                              deck_name=f'ZhLevel::Hanzi::{label}::Level {level}::字迹',
-                              dconf=deck_conf['id'])
-
-        self.anki.add_tags(note_ids=[note_id], tags=[datetime.now().strftime('%Y.%m.%d')])
-
-        return note_id
+        return note_ids
 
     def add_vocab(self, vocab):
-        if not self.anki.search_notes({'simplified': vocab}):
+        existing_ids = self.anki.search_notes({'simplified': vocab})
+
+        if not existing_ids:
             db_vs = zh.Vocab.match(vocab)
             if len(db_vs) > 0:
                 db_v = db_vs[0]
@@ -183,17 +191,20 @@ class ZhSync:
                                   deck_name=f'ZhLevel::Vocab::{label}::Level {level:02d}::中英',
                                   dconf=deck_conf['id'])
 
-            self.anki.add_tags(note_ids=[note_id], tags=[datetime.now().strftime('%Y.%m.%d')])
+            note_ids = [note_id]
+        else:
+            note_ids = existing_ids
 
-            return note_id
+        self.anki.add_tags(note_ids=note_ids, tags=[datetime.now().strftime('%Y.%m.%d')])
+
+        return note_ids
 
     def add_text(self, text):
         hanzis = [h for h in regex.findall(r'\p{IsHan}', text)]
         vocabs = [v for v in jieba.cut_for_search(text) if regex.search(r'\p{IsHan}', v)]
 
-        note_ids = [self.add_hanzi(h) for h in hanzis]
-        note_ids += [self.add_vocab(v) for v in vocabs]
-        note_ids = [x for x in note_ids if x]
+        note_ids = sum([self.add_hanzi(h) for h in hanzis], [])
+        note_ids += sum([self.add_vocab(v) for v in vocabs], [])
 
         # self.anki.add_tags(note_ids, [datetime.now().strftime('%Y.%m.%d')])
 

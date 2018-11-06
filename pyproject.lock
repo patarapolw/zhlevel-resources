@@ -5,7 +5,7 @@ name = "ankisync"
 optional = false
 platform = "*"
 python-versions = "*"
-version = "0.1.6.3"
+version = "0.1.6.4"
 
 [package.dependencies]
 appdirs = "^1.4"
@@ -275,7 +275,7 @@ python-versions = "*"
 version = "3.11.1"
 
 [[package]]
-category = "dev"
+category = "main"
 description = "Fast, Extensible Progress Meter"
 name = "tqdm"
 optional = false
