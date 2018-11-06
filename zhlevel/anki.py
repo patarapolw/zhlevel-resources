@@ -3,6 +3,8 @@ from ankisync.anki import Anki
 from ankisync.presets import get_wanki_min_dconf
 from zhlib import zh
 from wordfreq import word_frequency
+import jieba
+import regex
 
 from .hanzi import HanziLevel
 from .vocab import VocabLevel
@@ -170,3 +172,10 @@ class ZhSync:
         self.anki.change_deck(card_ids['中英'],
                               deck_name=f'ZhLevel::Vocab::{label}::Level {level:02d}::中英',
                               dconf=deck_conf['id'])
+
+    def add_text(self, text):
+        hanzis = [h for h in regex.findall(r'\p{IsHan}', text)]
+        vocabs = [v for v in jieba.cut_for_search(text) if regex.search(r'\p{IsHan}', v)]
+
+        [self.add_hanzi(h) for h in hanzis]
+        [self.add_vocab(v) for v in vocabs]
