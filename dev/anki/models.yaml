@@ -1,0 +1,180 @@
+'1541040860844':
+  css: ".card {\n font-family: arial;\n font-size: 20px;\n text-align: center;\n color:\
+    \ black;\n background-color: white;\n}\n\n.cloze {\n font-weight: bold;\n color:\
+    \ blue;\n}"
+  did: 1
+  flds:
+  - font: Arial
+    media: []
+    name: simplified
+    ord: 0
+    rtl: false
+    size: 20
+    sticky: false
+  - font: Arial
+    media: []
+    name: english
+    ord: 1
+    rtl: false
+    size: 20
+    sticky: false
+  - font: Arial
+    media: []
+    name: frequency
+    ord: 2
+    rtl: false
+    size: 20
+    sticky: false
+  - font: Arial
+    media: []
+    name: traditional
+    ord: 3
+    rtl: false
+    size: 20
+    sticky: false
+  - font: Arial
+    media: []
+    name: pinyin
+    ord: 4
+    rtl: false
+    size: 20
+    sticky: false
+  - font: Arial
+    media: []
+    name: sentences
+    ord: 5
+    rtl: false
+    size: 20
+    sticky: false
+  - font: Arial
+    media: []
+    name: note
+    ord: 6
+    rtl: false
+    size: 20
+    sticky: false
+  id: 1541040860844
+  latexPost: \end{document}
+  latexPre: "\\documentclass[12pt]{article}\n\\special{papersize=3in,5in}\n\\usepackage[utf8]{inputenc}\n\
+    \\usepackage{amssymb,amsmath}\n\\pagestyle{empty}\n\\setlength{\\parindent}{0in}\n\
+    \begin{document}\n"
+  mod: 1541427489
+  name: zhlib_vocab
+  req:
+  - - 0
+    - all
+    - [0]
+  - - 1
+    - all
+    - [1]
+  sortf: 0
+  tags: []
+  tmpls:
+  - {afmt: "<h1>{{simplified}}</h1>\n<hr>\n<h2>{{pinyin}}</h2>\n<h3>{{english}}</h3>\n\
+      <p>Traditional: {{traditional}}</p>\n<p>Frequency: {{frequency}}</p>\n<h4>Sentence</h4>\n\
+      <p>{{sentences}}</p>\n", bafmt: '', bqfmt: '', did: null, name: Forward, ord: 0,
+    qfmt: "<h1>Vocab: {{simplified}}</h1>\n"}
+  - {afmt: "<h1>{{simplified}}</h1>\n<hr>\n<h2>{{pinyin}}</h2>\n<h3>{{english}}</h3>\n\
+      <p>Traditional: {{traditional}}</p>\n<p>Frequency: {{frequency}}</p>\n<h4>Sentence</h4>\n\
+      <p>{{sentences}}</p>\n", bafmt: '', bqfmt: '', did: null, name: Reverse, ord: 1,
+    qfmt: "<h1>Vocab meaning: {{english}}</h1>\n"}
+  type: 0
+  usn: -1
+  vers: []
+'1541040861255':
+  css: ".card {\n font-family: arial;\n font-size: 20px;\n text-align: center;\n color:\
+    \ black;\n background-color: white;\n}\n\n.cloze {\n font-weight: bold;\n color:\
+    \ blue;\n}"
+  did: 1
+  flds:
+  - font: Arial
+    media: []
+    name: hanzi
+    ord: 0
+    rtl: false
+    size: 20
+    sticky: false
+  - font: Arial
+    media: []
+    name: meaning
+    ord: 1
+    rtl: false
+    size: 20
+    sticky: false
+  - font: Arial
+    media: []
+    name: pinyin
+    ord: 2
+    rtl: false
+    size: 20
+    sticky: false
+  - font: Arial
+    media: []
+    name: heisig
+    ord: 3
+    rtl: false
+    size: 20
+    sticky: false
+  - font: Arial
+    media: []
+    name: kanji
+    ord: 4
+    rtl: false
+    size: 20
+    sticky: false
+  - font: Arial
+    media: []
+    name: junda
+    ord: 5
+    rtl: false
+    size: 20
+    sticky: false
+  - font: Arial
+    media: []
+    name: vocabs
+    ord: 6
+    rtl: false
+    size: 20
+    sticky: false
+  - font: Arial
+    media: []
+    name: sentences
+    ord: 7
+    rtl: false
+    size: 20
+    sticky: false
+  - font: Arial
+    media: []
+    name: note
+    ord: 8
+    rtl: false
+    size: 20
+    sticky: false
+  id: 1541040861255
+  latexPost: \end{document}
+  latexPre: "\\documentclass[12pt]{article}\n\\special{papersize=3in,5in}\n\\usepackage[utf8]{inputenc}\n\
+    \\usepackage{amssymb,amsmath}\n\\pagestyle{empty}\n\\setlength{\\parindent}{0in}\n\
+    \begin{document}\n"
+  mod: 1541427489
+  name: zhlib_hanzi
+  req:
+  - - 0
+    - all
+    - [0]
+  - - 1
+    - all
+    - [1]
+  sortf: 0
+  tags: []
+  tmpls:
+  - {afmt: "<h1>{{hanzi}}</h1>\n<hr>\n<h2>{{pinyin}}</h2>\n<h3>{{meaning}}</h3>\n\
+      <p>Junda: {{junda}}</p>\n<p>Heisig: {{heisig}}</p>\n<h4>Vocab</h4>\n<p>{{vocabs}}</p>\n\
+      <h4>Sentence</h4>\n<p>{{sentences}}</p>\n", bafmt: '', bqfmt: '', did: null,
+    name: Forward, ord: 0, qfmt: "<h1>Hanzi: {{hanzi}}</h1>\n"}
+  - {afmt: "<h1>{{hanzi}}</h1>\n<hr>\n<h2>{{pinyin}}</h2>\n<h3>{{meaning}}</h3>\n\
+      <p>Junda: {{junda}}</p>\n<p>Heisig: {{heisig}}</p>\n<h4>Vocab</h4>\n<p>{{vocabs}}</p>\n\
+      <h4>Sentence</h4>\n<p>{{sentences}}</p>\n", bafmt: '', bqfmt: '', did: null,
+    name: Reverse, ord: 1, qfmt: "<h1>Hanzi meaning: {{meaning}}</h1>\n"}
+  type: 0
+  usn: -1
+  vers: []

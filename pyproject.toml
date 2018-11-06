@@ -11,5 +11,9 @@ python = "*"
 zhlib = {path = "../zhlib"}
 ankisync = {path = "../ankisync"}
 regex = "=2018.02.21"
+mistune = "^0.8.4"
+importlib_resources = "^1.0"
+wordfreq = "^2.2"
 
 [tool.poetry.dev-dependencies]
+tqdm = "^4.28"
