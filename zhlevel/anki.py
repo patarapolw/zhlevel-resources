@@ -5,6 +5,7 @@ from zhlib import zh
 from wordfreq import word_frequency
 import jieba
 import regex
+from datetime import datetime
 
 from .hanzi import HanziLevel
 from .vocab import VocabLevel
@@ -121,11 +122,13 @@ class ZhSync:
                 'hanzi': hanzi
             }
 
-        card_ids = self.anki.note_to_cards(self.anki.add_note({
+        note_id = self.anki.add_note({
             'modelName': 'zhlevel_hanzi',
             'deckId': 1,
             'fields': h_dict
-        }))
+        })
+
+        card_ids = self.anki.note_to_cards(note_id)
 
         level = self.h_level[hanzi]
         label = self.LABELS[(int(level)-1) // 10]
@@ -140,42 +143,58 @@ class ZhSync:
                               deck_name=f'ZhLevel::Hanzi::{label}::Level {level}::字迹',
                               dconf=deck_conf['id'])
 
+        self.anki.add_tags(note_ids=[note_id], tags=[datetime.now().strftime('%Y.%m.%d')])
+
+        return note_id
+
     def add_vocab(self, vocab):
-        db_vs = zh.Vocab.match(vocab)
-        if len(db_vs) > 0:
-            db_v = db_vs[0]
-            v_dict = dict(db_v)
-            v_dict.update({
-                'sentences': markdown('\n'.join(f'- {s}' for s in v_dict['sentences'])),
+        if not self.anki.search_notes({'simplified': vocab}):
+            db_vs = zh.Vocab.match(vocab)
+            if len(db_vs) > 0:
+                db_v = db_vs[0]
+                v_dict = dict(db_v)
+                v_dict.update({
+                    'sentences': markdown('\n'.join(f'- {s}' for s in v_dict['sentences'])),
+                })
+            else:
+                v_dict = {
+                    'simplified': vocab
+                }
+            v_dict['frequency'] = word_frequency(vocab, 'zh') * 10**6
+
+            note_id = self.anki.add_note({
+                'modelName': 'zhlevel_vocab',
+                'deckId': 1,
+                'fields': v_dict
             })
-        else:
-            v_dict = {
-                'simplified': vocab
-            }
-        v_dict['frequency'] = word_frequency(vocab, 'zh') * 10**6
 
-        card_ids = self.anki.note_to_cards(self.anki.add_note({
-            'modelName': 'zhlevel_vocab',
-            'deckId': 1,
-            'fields': v_dict
-        }))
+            card_ids = self.anki.note_to_cards(note_id)
 
-        level = self.v_level[vocab]
-        label = self.LABELS[(int(level) - 1) // 10]
+            level = self.v_level[vocab]
+            label = self.LABELS[(int(level) - 1) // 10]
 
-        self.anki.change_deck(card_ids['英中'],
-                              deck_name=f'ZhLevel::Vocab::{label}::Level {level:02d}::英中',
-                              dconf=deck_conf['id'])
+            self.anki.change_deck(card_ids['英中'],
+                                  deck_name=f'ZhLevel::Vocab::{label}::Level {level:02d}::英中',
+                                  dconf=deck_conf['id'])
 
-        level = self.h_level[vocab]
-        label = self.LABELS[(int(level) - 1) // 10]
-        self.anki.change_deck(card_ids['中英'],
-                              deck_name=f'ZhLevel::Vocab::{label}::Level {level:02d}::中英',
-                              dconf=deck_conf['id'])
+            level = self.h_level[vocab]
+            label = self.LABELS[(int(level) - 1) // 10]
+            self.anki.change_deck(card_ids['中英'],
+                                  deck_name=f'ZhLevel::Vocab::{label}::Level {level:02d}::中英',
+                                  dconf=deck_conf['id'])
+
+            self.anki.add_tags(note_ids=[note_id], tags=[datetime.now().strftime('%Y.%m.%d')])
+
+            return note_id
 
     def add_text(self, text):
         hanzis = [h for h in regex.findall(r'\p{IsHan}', text)]
         vocabs = [v for v in jieba.cut_for_search(text) if regex.search(r'\p{IsHan}', v)]
 
-        [self.add_hanzi(h) for h in hanzis]
-        [self.add_vocab(v) for v in vocabs]
+        note_ids = [self.add_hanzi(h) for h in hanzis]
+        note_ids += [self.add_vocab(v) for v in vocabs]
+        note_ids = [x for x in note_ids if x]
+
+        # self.anki.add_tags(note_ids, [datetime.now().strftime('%Y.%m.%d')])
+
+        return note_ids
