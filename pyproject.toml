@@ -1,6 +1,6 @@
 [tool.poetry]
 name = "zhlevel"
-version = "0.1.0"
+version = "0.1.1.dev1"
 description = '''Trying to figure out, if I had to separate Chinese into 6x10 = 60 levels,
 just like https://www.wanikani.com, how would I do it?'''
 authors = ["Pacharapol Withayasakpunt <patarapolw@gmail.com>"]
@@ -9,11 +9,12 @@ authors = ["Pacharapol Withayasakpunt <patarapolw@gmail.com>"]
 python = "*"
 "ruamel.yaml" = "^0.15.76"
 zhlib = {path = "../zhlib"}
-ankisync = {path = "../ankisync"}
 regex = "=2018.02.21"
 mistune = "^0.8.4"
 importlib_resources = "^1.0"
 wordfreq = "^2.2"
+srs-format = {path = "../srs-format"}
 
 [tool.poetry.dev-dependencies]
 tqdm = "^4.28"
+ankisync = {path = "../ankisync"}
