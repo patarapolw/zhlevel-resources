@@ -1,0 +1,15 @@
+{
+    "defaultSeverity": "error",
+    "extends": [
+        "tslint:recommended"
+    ],
+    "jsRules": {},
+    "rules": {
+        "ordered-imports": false,
+        "object-literal-sort-keys": false,
+        "trailing-comma": [true, {"multiline": "never", "singleline": "never"}],
+        "variable-name": [true, "allow-pascal-case", "allow-leading-underscore"],
+        "no-console": [true, "log"]
+    },
+    "rulesDirectory": []
+}

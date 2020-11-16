@@ -1,0 +1,35 @@
+{
+  "name": "zhlevel-dev",
+  "version": "1.0.0",
+  "description": "中文 level",
+  "main": "index.js",
+  "license": "MIT",
+  "devDependencies": {
+    "@types/jquery": "^3.3.29",
+    "@types/mithril": "^1.1.16",
+    "@types/showdown": "^1.9.2",
+    "@types/uuid": "^3.4.4",
+    "@types/xregexp": "^3.0.29",
+    "bootstrap": "^4.3.1",
+    "css-loader": "^2.1.0",
+    "expose-loader": "^0.7.5",
+    "file-loader": "^3.0.1",
+    "jquery": "^3.3.1",
+    "mithril": "^1.1.6",
+    "popper.js": "^1.14.7",
+    "raw-loader": "^1.0.0",
+    "showdown": "^1.9.0",
+    "style-loader": "^0.23.1",
+    "ts-loader": "^5.3.3",
+    "typescript": "^3.3.3",
+    "uuid": "^3.3.2",
+    "webpack": "^4.29.5",
+    "webpack-cli": "^3.2.3",
+    "webpack-dev-server": "^3.2.0",
+    "xregexp": "^4.2.4"
+  },
+  "scripts": {
+    "start": "webpack-dev-server --config webpack.dev.js"
+  },
+  "dependencies": {}
+}
