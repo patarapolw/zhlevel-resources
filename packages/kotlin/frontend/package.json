@@ -32,7 +32,7 @@
     "jquery": "^3.3.1",
     "jquery-contextmenu": "^3.0.0-beta.2",
     "jsonwebtoken": "^8.4.0",
-    "mithril": "^1.1.6",
+    "mithril": "^1.1.7",
     "popper.js": "^1.14.6",
     "uuid": "^3.3.2",
     "xregexp": "^4.2.4"
